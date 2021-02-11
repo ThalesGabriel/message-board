@@ -28,7 +28,7 @@ Based on Code Challenge - NestJS + TypeORM + GraphQL made by Rocketseat
 
 - [x] Nest.js
 - [ ] GraphQL
-- [ ] TypeORM
+- [x] PRISMA
 - [ ] React + Apollo Client (or another library)
 
 ## What can be better?
