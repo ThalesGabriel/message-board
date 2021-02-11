@@ -5,7 +5,9 @@ import { AppService } from './app.service';
 import { UserModule } from './use-cases/user/user.module';
 
 @Module({
-  imports: [UserModule, GraphQLModule.forRoot({})],
+  imports: [GraphQLModule.forRoot({
+    include: [ UserModule ]
+  })],
   controllers: [AppController],
   providers: [AppService],
 })

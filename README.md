@@ -27,13 +27,10 @@ Based on Code Challenge - NestJS + TypeORM + GraphQL made by Rocketseat
 ## Non-functional Requirements
 
 - [x] Nest.js
-- [ ] GraphQL
+- [x] SOLID
+- [X] GraphQL
 - [x] PRISMA
 - [ ] React + Apollo Client (or another library)
-
-## What can be better?
-
-- 
 
 ## Dependencies
 
