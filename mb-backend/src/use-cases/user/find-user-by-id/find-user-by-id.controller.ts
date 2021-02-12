@@ -1,0 +1,13 @@
+import { Controller, Get, Param } from '@nestjs/common';
+import { User } from '@prisma/client';
+import { FindUserByIdService } from './find-user-by-id.service';
+
+@Controller('find-user-by-id')
+export class FindUserByIdController {
+    constructor(private readonly findUserByIdService: FindUserByIdService) {}
+
+    @Get()
+    execute(@Param('id') id: Number): Promise<User> {
+        return this.findUserByIdService.execute(id)
+    }
+}

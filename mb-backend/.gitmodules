@@ -1,0 +1,3 @@
+[submodule "mb-backend"]
+	path = mb-backend
+	url = https://github.com/ThalesGabriel/message-board
