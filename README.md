@@ -1,5 +1,5 @@
 <h1 align="center">
-Simple GraphQL API with NestJS in Back-end. React and Apollo Client for Front-end.
+Simple Prisma API with NestJS in Back-end. React and Apollo Client for Front-end.
 </h1>
 <h2 align="center">
 Based on Code Challenge - NestJS + TypeORM + GraphQL made by Rocketseat
@@ -8,14 +8,17 @@ Based on Code Challenge - NestJS + TypeORM + GraphQL made by Rocketseat
 
 ## Functional Requirements
 
-- [ ] User register with e-mail only
-- [ ] User login with e-mail only
+- [ ] User register with e-mail, password only. Name is optional
+- [ ] User login with e-mail and password only
 - [ ] User need to be able to post messages on the Board (Back-end)
 - [ ] User need to be able to post messages on the Board (Front-end)
 - [ ] (optional) User need to be able to delete messages (Back-end)
 - [ ] (optional) User need to be able to delete messages (Front-end)
 - [ ] New messages can be listed at real time (Back-end)
 - [ ] New messages can be listed at real time (Front-end)
+- [ ] User need to be able to upload photos and files
+- [ ] User need to be able to comment photos and files
+- [ ] User need to be able to send coins to other users
 - [ ] Add Swagger support
 - [ ] DataLoader integration
 
@@ -28,7 +31,6 @@ Based on Code Challenge - NestJS + TypeORM + GraphQL made by Rocketseat
 
 - [x] Nest.js
 - [x] SOLID
-- [X] GraphQL
 - [x] PRISMA
 - [ ] React + Apollo Client (or another library)
 
