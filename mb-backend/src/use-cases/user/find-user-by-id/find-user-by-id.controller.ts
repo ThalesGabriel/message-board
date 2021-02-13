@@ -6,7 +6,7 @@ import { FindUserByIdService } from './find-user-by-id.service';
 export class FindUserByIdController {
     constructor(private readonly findUserByIdService: FindUserByIdService) {}
 
-    @Get()
+    @Get("/:id")
     execute(@Param('id') id: Number): Promise<User> {
         return this.findUserByIdService.execute(id)
     }
