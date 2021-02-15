@@ -18,6 +18,9 @@ import * as yup from "yup";
 import actions from "../redux/actions";
 import { compose } from 'recompose';
 import { connect } from 'react-redux';
+import CircularProgress from "../components/CircularProgress";
+import CustomSnackbar from "../components/CustomSnackbar";
+import {useRouter} from "next/router";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -56,8 +59,18 @@ const validationSchema = yup.object({
 
 function Register(props) {
   const classes = useStyles();
+  const router = useRouter();
+  const [ finished, setFinished ] = React.useState(false)
 
-	console.log("props", props	)
+  React.useEffect(() => {
+    if(props.user) {
+      setFinished(true)
+      setTimeout(() => { 
+        router.push("/") 
+      }, 4000)
+    }
+  }, [props])
+
 	const formik = useFormik({
     initialValues: {
 			first_name: 'foo',
@@ -69,6 +82,7 @@ function Register(props) {
 		enableReinitialize: true,
     onSubmit: (values) => {
       props.registerUser(values)
+
     },
   });
 
@@ -155,10 +169,11 @@ function Register(props) {
             type="submit"
             fullWidth
             variant="contained"
+            disabled={props.loading || finished}
             color="primary"
             className={classes.submit}
           >
-            Sign Up
+            {props.loading || finished? <CircularProgress size={20}/> : "Sign Up"}
           </Button>
           <Grid container justify="flex-end">
             <Grid item>
@@ -172,6 +187,8 @@ function Register(props) {
       <Box mt={5}>
         <Copyright />
       </Box>
+      {props.error && (<CustomSnackbar text={props.error.message} cause={"error"}/>)}
+      {props.user && (<CustomSnackbar text={"User successfully created. We are redirecting you."} cause={"success"}/>)}
     </Container>
   );
 }

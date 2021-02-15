@@ -1,4 +1,5 @@
 import { Module } from '@nestjs/common';
+import { APP_INTERCEPTOR } from '@nestjs/core';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { UserService } from 'src/repo/user/user.service';
 import { FindUserByIdController } from './find-user-by-id.controller';

@@ -26,15 +26,16 @@ const registerUser = values => {
         console.log(response)
         dispatch({
           type: SIGNUP_SUCCESS,
+          user: response.data
         });
       })
       .catch(error => {
         console.log('error');
-        console.log(error);
+        console.log(error.response);
         dispatch({
           type: SIGNUP_FAIL,
           error: {
-            message: 'Aconteceu um erro interno! Tente novamente mais tarde!'
+            message: error.response.data.message
           }
         });
       });

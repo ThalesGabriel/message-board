@@ -1,4 +1,4 @@
-import { Controller, Get, Param } from '@nestjs/common';
+import { Controller, Get, Param, UseInterceptors } from '@nestjs/common';
 import { User } from '@prisma/client';
 import { FindUserByIdService } from './find-user-by-id.service';
 
