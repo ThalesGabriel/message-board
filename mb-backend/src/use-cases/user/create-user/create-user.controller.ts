@@ -1,4 +1,4 @@
-import { Body, Controller, Post } from '@nestjs/common';
+import { Body, Controller, Post, UseInterceptors } from '@nestjs/common';
 import { ApiResponse } from '@nestjs/swagger';
 import { User } from '@prisma/client';
 import RegisterDto from 'src/domain/dto/register.dto';

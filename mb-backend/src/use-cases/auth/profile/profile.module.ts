@@ -1,0 +1,20 @@
+import { Module } from '@nestjs/common';
+import { ProfileService } from './profile.service';
+import { ProfileController } from './profile.controller';
+import { AuthModule } from 'src/adapters/auth/auth.module';
+import { EncryptModule } from 'src/adapters/encrypt/encrypt.module';
+import { JwtModule } from '@nestjs/jwt';
+import { jwtConstants } from 'src/adapters/auth/implementation/constants';
+import { AuthService } from 'src/adapters/auth/auth.service';
+import { JwtImplementationService } from 'src/adapters/auth/implementation/jwt-implementation.service';
+import { UserModule } from 'src/repo/user/user.module';
+
+@Module({
+  imports: [UserModule, EncryptModule, JwtModule.register({
+    secret: jwtConstants.secret,
+    signOptions: { expiresIn: '60s' },
+  }),],
+  controllers: [ProfileController],
+  providers: [AuthService, JwtImplementationService, ProfileService]
+})
+export class ProfileModule {}
