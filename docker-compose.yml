@@ -1,11 +1,32 @@
 version: '3'
 services:
-  mysql:
-    image: postgres
-    ports:
-      - 5432:5432
-    volumes:
-      - ./db_mb
-    environment:
-      POSTGRES_PASSWORD: 123
-      POSTGRES_DATABASE: meu-postgres
+  postgres:
+      image: postgres
+      ports:
+          - "5432:5432"
+      environment:
+          POSTGRES_PASSWORD: "123"
+      volumes:
+          - ./postgresql/data:/var/lib/postgresql/data
+  mb-backend:
+      container_name: mb-backend
+      build:
+          context: ./mb-backend
+          dockerfile: Dockerfile
+      volumes:
+          - /app/node_modules
+          - ./mb-backend/src:/app/src
+          - ./mb-backend/prisma:/app/prisma
+          - ./mb-backend/dist:/app/dist
+          - ./mb-backend/test:/app/test
+      ports:
+          - "3001:3001"
+  mb-frontend:
+      build:
+          context: ./mb-frontend
+          dockerfile: Dockerfile.dev
+      volumes:
+          - /app/node_modules
+          - ./mb-frontend:/app
+      ports:
+          - "3000:3000"
