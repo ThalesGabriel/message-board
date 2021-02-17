@@ -8,7 +8,8 @@ Based on Code Challenge - NestJS + TypeORM + GraphQL made by Rocketseat
 
 ## Functional Requirements
 
-- [ ] User register with e-mail, password only. Name is optional
+- [X] User register with e-mail, password only. Name is optional
+- [ ] User will receive an email with confirmation of register
 - [ ] User login with e-mail and password only
 - [ ] User need to be able to post messages on the Board (Back-end)
 - [ ] User need to be able to post messages on the Board (Front-end)

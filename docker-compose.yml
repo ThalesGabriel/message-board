@@ -1,0 +1,11 @@
+version: '3'
+services:
+  mysql:
+    image: postgres
+    ports:
+      - 5432:5432
+    volumes:
+      - ./db_mb
+    environment:
+      POSTGRES_PASSWORD: 123
+      POSTGRES_DATABASE: meu-postgres
