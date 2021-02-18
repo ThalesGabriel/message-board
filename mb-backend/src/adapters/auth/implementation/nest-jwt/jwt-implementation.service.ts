@@ -6,7 +6,7 @@ import { IAuthInterface } from 'src/interfaces/IAuthInterface';
 import { EncryptService } from 'src/adapters/encrypt/encrypt.service';
 
 @Injectable()
-export class JwtImplementationService {
+export class JwtImplementationService implements IAuthInterface{
   constructor(
 		private readonly userService: UserService,
 		private readonly encryptService: EncryptService,

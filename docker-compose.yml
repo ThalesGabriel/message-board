@@ -1,32 +1,37 @@
 version: '3'
 services:
+  message-board-api:
+    image: message-board-api:latest
+    container_name: mb-api
+    build:
+      context: ./mb-backend/
+      dockerfile: Dockerfile.dev
+    ports:
+      - 3001:3001
+    depends_on:
+      - postgres
+    env_file:
+      - .env
   postgres:
-      image: postgres
-      ports:
-          - "5432:5432"
-      environment:
-          POSTGRES_PASSWORD: "123"
-      volumes:
-          - ./postgresql/data:/var/lib/postgresql/data
-  mb-backend:
-      container_name: mb-backend
-      build:
-          context: ./mb-backend
-          dockerfile: Dockerfile
-      volumes:
-          - /app/node_modules
-          - ./mb-backend/src:/app/src
-          - ./mb-backend/prisma:/app/prisma
-          - ./mb-backend/dist:/app/dist
-          - ./mb-backend/test:/app/test
-      ports:
-          - "3001:3001"
-  mb-frontend:
-      build:
-          context: ./mb-frontend
-          dockerfile: Dockerfile.dev
-      volumes:
-          - /app/node_modules
-          - ./mb-frontend:/app
-      ports:
-          - "3000:3000"
+    image: postgres
+    container_name: postgres-mb
+    restart: always
+    ports:
+      - 5432:5432
+    env_file:
+      - .env
+    volumes:
+      - postgres:/var/lib/postgresql/data
+  message-board-frontend:
+    build:
+      context: ./mb-frontend
+      dockerfile: Dockerfile.dev
+    image: message-board-frontend:latest
+    environment:
+      PORT: 3000
+      PROXY_API: http://playground-web-backend:8080/
+    ports:
+      - 3000:3000
+volumes:
+  postgres:
+    name: message-board-db

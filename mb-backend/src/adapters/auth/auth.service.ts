@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import LoginDto from 'src/domain/dto/login.dto';
 import { IAuthInterface } from 'src/interfaces/IAuthInterface';
-import { JwtImplementationService } from './implementation/jwt-implementation.service';
+import { JwtImplementationService } from './implementation/nest-jwt/jwt-implementation.service';
 
 @Injectable()
 export class AuthService implements IAuthInterface {
