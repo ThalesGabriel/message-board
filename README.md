@@ -9,8 +9,8 @@ Based on Code Challenge - NestJS + TypeORM + GraphQL made by Rocketseat
 ## Functional Requirements
 
 - [X] User register with e-mail, password only. Name is optional
-- [ ] User will receive an email with confirmation of register
-- [ ] User login with e-mail and password only
+- [X] User will receive an email with confirmation of register
+- [X] User login with e-mail and password only
 - [ ] User need to be able to post messages on the Board (Back-end)
 - [ ] User need to be able to post messages on the Board (Front-end)
 - [ ] (optional) User need to be able to delete messages (Back-end)
@@ -33,6 +33,7 @@ Based on Code Challenge - NestJS + TypeORM + GraphQL made by Rocketseat
 - [x] Nest.js
 - [x] SOLID
 - [x] PRISMA
+- [x] Docker
 - [ ] React + Apollo Client (or another library)
 
 ## Dependencies
