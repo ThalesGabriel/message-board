@@ -1,7 +1,6 @@
 version: '3'
 services:
   message-board-api:
-    image: message-board-api:latest
     container_name: mb-api
     build:
       context: ./mb-backend/
@@ -14,24 +13,20 @@ services:
       - .env
   postgres:
     image: postgres
-    container_name: postgres-mb
-    restart: always
-    ports:
-      - 5432:5432
+    container_name: "postgres"
     env_file:
       - .env
     volumes:
-      - postgres:/var/lib/postgresql/data
-  message-board-frontend:
-    build:
-      context: ./mb-frontend
-      dockerfile: Dockerfile.dev
-    image: message-board-frontend:latest
-    environment:
-      PORT: 3000
-      PROXY_API: http://playground-web-backend:8080/
+      - "./data/postgres:/var/lib/postgresql/data"
     ports:
-      - 3000:3000
-volumes:
-  postgres:
-    name: message-board-db
+      - 5432:5432
+  # message-board-frontend:
+  #   build:
+  #     context: ./mb-frontend/
+  #     dockerfile: Dockerfile.dev
+  #   image: message-board-frontend:latest
+  #   environment:
+  #     PORT: 3000
+  #     PROXY_API: http://playground-web-backend:8080/
+  #   ports:
+  #     - 3000:3000
