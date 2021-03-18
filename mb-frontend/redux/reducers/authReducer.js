@@ -2,9 +2,9 @@ import {
   SIGNUP_REQUESTED,
   SIGNUP_SUCCESS,
   SIGNUP_FAIL,
-  SIGNIN_REQUESTED,
-  SIGNIN_SUCCESS,
-  SIGNIN_FAIL,
+  LOGIN_REQUESTED,
+  LOGIN_SUCCESS,
+  LOGIN_FAIL,
 } from "../types";
 
 const initialState = {
@@ -25,12 +25,16 @@ export default (state = initialState, action) => {
       return Object.assign({}, state, { loading: false, user: action.user });
     case SIGNUP_FAIL:
       return Object.assign({}, state, { loading: false, error: action.error });
-    case SIGNIN_REQUESTED:
-      return Object.assign({}, state, { loading: true });
-    case SIGNIN_SUCCESS:
-      return Object.assign({}, state, { loading: false });
-    case SIGNIN_FAIL:
-      return Object.assign({}, state, { loading: false });
+    case LOGIN_REQUESTED:
+      return Object.assign({}, state, { 
+        loading: true, 
+        token: null, 
+        error: null 
+      });
+    case LOGIN_SUCCESS:
+      return Object.assign({}, state, { loading: false, token: action.token });
+    case LOGIN_FAIL:
+      return Object.assign({}, state, { loading: false, error: action.error });
     default:
       return state;
   }

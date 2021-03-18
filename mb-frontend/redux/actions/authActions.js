@@ -2,9 +2,9 @@ import {
   SIGNUP_REQUESTED,
   SIGNUP_SUCCESS,
   SIGNUP_FAIL,
-  SIGNIN_REQUESTED,
-  SIGNIN_SUCCESS,
-  SIGNIN_FAIL
+  LOGIN_REQUESTED,
+  LOGIN_SUCCESS,
+  LOGIN_FAIL
 } from '../types';
 import axios from 'axios'
 
@@ -42,6 +42,40 @@ const registerUser = values => {
   };
 };
 
+const login = values => {
+  return dispatch => {
+    console.log('login', values)
+    dispatch({ type: LOGIN_REQUESTED });
+    console.log('LOGIN_REQUESTED', values)
+
+    let user = {
+      password: values.password,
+      username: values.username
+    };
+
+    axios
+      .post('http://localhost:3001/login/auth', user)
+      .then(response => {
+        console.log(response)
+        dispatch({
+          type: LOGIN_SUCCESS,
+          token: response.data
+        });
+      })
+      .catch(error => {
+        console.log('error');
+        console.log(error.response);
+        dispatch({
+          type: LOGIN_FAIL,
+          error: {
+            message: error.response.data.message
+          }
+        });
+      });
+  };
+};
+
 export default {
   registerUser,
+  login
 };

@@ -2,24 +2,33 @@ import React from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
-import TextField from '@material-ui/core/TextField';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
-import Link from '@material-ui/core/Link';
+import Link from 'next/link';
 import Grid from '@material-ui/core/Grid';
+import CircularProgress from '@material-ui/core/CircularProgress';
 import Box from '@material-ui/core/Box';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import { useRouter } from 'next/router';
+import { useFormik } from "formik";
+import * as yup from "yup";
+import { TextInput } from "../components/Input";
+import actions from "../redux/actions";
+import { compose } from 'recompose';
+import { connect } from 'react-redux';
+import CustomSnackbar from "../components/CustomSnackbar";
 
 function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
       {'Copyright © '}
       <Link color="inherit" href="https://material-ui.com/">
-        Message Board
+        <a style={{color:"inherit"}} href="https://material-ui.com/">
+          Message Board
+        </a>
       </Link>{' '}
       {new Date().getFullYear()}
       {'.'}
@@ -47,9 +56,38 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function SignIn() {
+const validationSchema = yup.object({
+	username: yup
+		.string("Digite seu primeiro nome"),
+  password: yup
+    .string("Digite sua senha")
+    .min(6, "Senha deve ter ao menos 6 caracteres")
+    .required("Campo obrigatório"),
+});
+
+function SignIn(props) {
   const classes = useStyles();
   const router = useRouter();
+  const [ finished, setFinished ] = React.useState(false)
+
+  React.useEffect(() => {
+    if(props.token) {
+      setFinished(true)
+      router.push("/home") 
+    }
+  }, [props])
+
+  const formik = useFormik({
+    initialValues: {
+			username: '',
+      password: '',
+    },
+    validationSchema: validationSchema,
+		enableReinitialize: true,
+    onSubmit: (values) => {
+      props.login(values)
+    },
+  });
 
   return (
     <Container component="main" maxWidth="xs">
@@ -61,29 +99,18 @@ export default function SignIn() {
         <Typography component="h1" variant="h5">
           Sign in
         </Typography>
-        <form className={classes.form} noValidate>
-          <TextField
-            variant="outlined"
-            margin="normal"
-            color="primary"
-            required
-            fullWidth
-            id="email"
-            label="Email Address"
-            name="email"
-            autoComplete="email"
-            autoFocus
+        <form className={classes.form} onSubmit={formik.handleSubmit}>
+          <TextInput
+            label="Username"
+            fieldName="username"
+            formik={formik}
+            style={{marginBottom: 20}}
           />
-          <TextField
-            variant="outlined"
-            margin="normal"
-            required
-            fullWidth
-            name="password"
+          <TextInput
             label="Password"
+            fieldName="password"
+            formik={formik}
             type="password"
-            id="password"
-            autoComplete="current-password"
           />
           <FormControlLabel
             control={<Checkbox value="remember" color="primary" />}
@@ -93,10 +120,11 @@ export default function SignIn() {
             type="submit"
             fullWidth
             variant="contained"
+            disabled={props.loading || finished}
             color="primary"
             className={classes.submit}
           >
-            Sign In
+            {props.loading || finished? <CircularProgress size={20}/> : "Sign In"}
           </Button>
           <Grid container>
             <Grid item xs>
@@ -115,6 +143,19 @@ export default function SignIn() {
       <Box mt={8}>
         <Copyright />
       </Box>
+      {props.error && (<CustomSnackbar text={props.error.message} cause={"error"}/>)}
+      {props.user && (<CustomSnackbar text={"User successfully created. We are redirecting you."} cause={"success"}/>)}
     </Container>
   );
 }
+
+const mapStateToProps = (state) => {
+  return {
+    token: state.authentication.token,
+    error: state.authentication.error,
+    loading: state.authentication.loading,
+  };
+}
+
+
+export default connect(mapStateToProps, actions)(SignIn);

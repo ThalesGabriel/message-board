@@ -2,10 +2,9 @@ import React from "react";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
-import TextField from "@material-ui/core/TextField";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Checkbox from "@material-ui/core/Checkbox";
-import Link from "@material-ui/core/Link";
+import Link from "next/link";
 import Grid from "@material-ui/core/Grid";
 import Box from "@material-ui/core/Box";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
@@ -21,6 +20,7 @@ import { connect } from 'react-redux';
 import CircularProgress from "../components/CircularProgress";
 import CustomSnackbar from "../components/CustomSnackbar";
 import {useRouter} from "next/router";
+import { TextInput } from "../components/Input";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -99,63 +99,32 @@ function Register(props) {
         <form className={classes.form} onSubmit={formik.handleSubmit}>
           <Grid container spacing={2}>
             <Grid item xs={12} sm={6}>
-              <TextField
-                autoComplete="fname"
-                name="first_name"
-                variant="outlined"
-                fullWidth
-                id="first_name"
-                label="First Name"
-                autoFocus
-								value={formik.values.first_name}
-								onChange={formik.handleChange}
-								error={formik.touched.first_name && Boolean(formik.errors.first_name)}
-								helperText={formik.touched.first_name && formik.errors.first_name}
+              <TextInput
+                label="First name"
+                fieldName="first_name"
+                formik={formik}
               />
             </Grid>
             <Grid item xs={12} sm={6}>
-              <TextField
-                variant="outlined"
-                fullWidth
-                id="last_name"
-                label="Last Name"
-                name="last_name"
-                autoComplete="lname"
-								value={formik.values.last_name}
-								onChange={formik.handleChange}
-								error={formik.touched.last_name && Boolean(formik.errors.last_name)}
-								helperText={formik.touched.last_name && formik.errors.last_name}
+              <TextInput
+                label="Last name"
+                fieldName="last_name"
+                formik={formik}
               />
             </Grid>
             <Grid item xs={12}>
-              <TextField
-                variant="outlined"
-                required
-                fullWidth
-                id="email"
+              <TextInput
                 label="Email Address"
-                name="email"
-                autoComplete="email"
-								value={formik.values.email}
-								onChange={formik.handleChange}
-								error={formik.touched.email && Boolean(formik.errors.email)}
-								helperText={formik.touched.email && formik.errors.email}
+                fieldName="email"
+                formik={formik}
               />
             </Grid>
             <Grid item xs={12}>
-              <TextField
-                variant="outlined"
-                required
-                fullWidth
-                name="password"
+              <TextInput
                 label="Password"
+                fieldName="password"
+                formik={formik}
                 type="password"
-                id="password"
-                autoComplete="current-password"
-								value={formik.values.password}
-								onChange={formik.handleChange}
-								error={formik.touched.password && Boolean(formik.errors.password)}
-								helperText={formik.touched.password && formik.errors.password}
               />
             </Grid>
             {/* <Grid item xs={12}>
@@ -177,7 +146,7 @@ function Register(props) {
           </Button>
           <Grid container justify="flex-end">
             <Grid item>
-              <Link href="#" variant="body2">
+              <Link href="/" variant="body2"> 
                 Already have an account? Sign in
               </Link>
             </Grid>
