@@ -28,13 +28,20 @@ Based on Code Challenge - NestJS + TypeORM + GraphQL made by Rocketseat
 - [ ] Message can only be deleted by its author
 - [ ] User ID could be stored at Context API in Front-end;
 
-## Non-functional Requirements
+## Technologies
 
 - [x] Nest.js
-- [x] SOLID
 - [x] PRISMA
 - [x] Docker
-- [ ] React + Apollo Client (or another library)
+- [x] React + Material ui + Redux
+- [x] Socket.io
+- [ ] Swagger
+
+## Concepts
+
+- [x] SOLID
+- [x] TDD
+- [x] Hexagonal architecture
 
 ## Dependencies
 
