@@ -4,8 +4,6 @@ import * as expressListRoutes from 'express-list-routes';
 import * as cookieParser from 'cookie-parser';
 import { ValidationPipe } from '@nestjs/common';
 
-declare const module: any;
-
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   app.useGlobalPipes(new ValidationPipe());
@@ -16,10 +14,5 @@ async function bootstrap() {
   const server = app.getHttpServer();
   const router = server._events.request._router;
   console.log(expressListRoutes({}, 'API:', router));
-  
-  if (module.hot) {
-    module.hot.accept();
-    module.hot.dispose(() => app.close());
-  }
 }
 bootstrap();

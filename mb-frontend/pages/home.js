@@ -1,66 +1,57 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { TextInput } from "../components/Input";
 import Page from "../components/Page";
 import { useFormik } from "formik";
 import * as yup from "yup";
-import { Button, Grid, IconButton, InputAdornment } from "@material-ui/core";
+import { Button, Grid, IconButton, InputAdornment, Typography } from "@material-ui/core";
 import CloudUploadIcon from "@material-ui/icons/CloudUpload";
 import SendRoundedIcon from "@material-ui/icons/SendRounded";
 // import { onClient, sendMessage } from "../utils/socketio";
-
 import io from "socket.io-client";
-import * as uuid from "uuid";
-
-const socket = io("http://localhost:3001");
 
 const validationSchema = yup.object({
   post: yup.string("Digite algo"),
 });
 
+
 export default function Home(props) {
-  const [messages, setMessages] = useState([]);
+  const [posts, setPosts] = useState([]);
+  const socket = React.useMemo( () => 
+    io('http://localhost:3002/room', { 
+      transports : ['websocket'], 
+      upgrade: false 
+    }), [] 
+  );
+
+  function sendMessage(message) {
+    socket.emit('send-message', { message });
+  }
 
   const formik = useFormik({
     initialValues: {},
     validationSchema: validationSchema,
     enableReinitialize: true,
     onSubmit: (values, { resetForm }) => {
-      sendMessage();
-      resetForm();
+      console.log('submit')
+      sendMessage(values.post);
+      resetForm({
+        post: ''
+      });
     },
   });
 
-  function sendMessage() {
-    socket.emit("Message", formik.values.post);
-  }
-
   useEffect(() => {
-    socket.on("Message", (data) => {
-      const message = document.createElement("p");
-      message.textContent = data;
-      app.appendChild(message);
-      console.log(data);
+    socket.on('connect', function() {
+      console.log('Connected');
     });
-  
-    socket.on("Connect", (data) => {
-      const connect = document.createElement("p");
-      connect.textContent = "A client has connected";
-      connect.style.color = "green";
-      app.appendChild(connect);
-      console.log(data);
-    });
-    
-    console.log('after connect', socket);
-    
-    socket.on("Disconnect", (data) => {
-      const disconnect = document.createElement("p");
-      disconnect.textContent = "A client has disconnected";
-      disconnect.style.color = "red";
-      app.appendChild(disconnect);
-      console.log(data);
-    });
-  });
 
+    socket.on('receive-message', (content) => {
+      console.log('received', content)
+      setPosts((prevState) => [content.message, ...prevState])
+    })
+  }, [socket]);
+
+  console.log(posts)
 
   return (
     <Page>
@@ -115,6 +106,15 @@ export default function Home(props) {
 							</Button>
 						</Grid> */}
           </Grid>
+        </Grid>
+      </Grid>
+      <Grid container justify="center">
+        <Grid item container xs={6}>
+          {posts.map((post, key) => (
+            <Grid item xs={12} key={key}>
+              <Typography>{post}</Typography>
+            </Grid>
+          ))}
         </Grid>
       </Grid>
     </Page>
