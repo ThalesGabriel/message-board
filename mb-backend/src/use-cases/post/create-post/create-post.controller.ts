@@ -10,8 +10,8 @@ export class CreatePostController {
 
   @Post('')
   async execute(
-		@Body() postData: { title: string; content?: string; email: string }
-	): Promise<PostModel> {
+		@Body() postData: { title: string; content?: string; authorEmail: string, draft: boolean }
+	): Promise<any> {
     return this.createPostService.execute(postData);
   }
 }

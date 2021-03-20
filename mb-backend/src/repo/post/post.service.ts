@@ -28,12 +28,22 @@ export class PostService {
     orderBy?: Prisma.PostOrderByInput;
   }): Promise<Post[]> {
     const { skip, take, cursor, where, orderBy } = params;
+    console.log(params)
     return this.prismaService.post.findMany({
       skip,
       take,
       cursor,
       where,
-      orderBy,
+      orderBy: {
+        createdAt:"desc",
+      },
+      include: {
+        author: {
+          select: {
+            name: true
+          }
+        }
+      },
     });
 	}
 

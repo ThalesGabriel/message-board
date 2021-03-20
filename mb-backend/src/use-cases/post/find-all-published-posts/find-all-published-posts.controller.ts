@@ -1,4 +1,4 @@
-import { Controller, Get } from '@nestjs/common';
+import { Controller, Get, Query } from '@nestjs/common';
 import { Post } from '@prisma/client';
 import { FindAllPublishedPostsService } from './find-all-published-posts.service';
 
@@ -7,7 +7,10 @@ export class FindAllPublishedPostsController {
   constructor(private readonly findAllPublishedPostsService: FindAllPublishedPostsService) {}
 
   @Get('')
-  async execute(): Promise<Post[]> {
-    return this.findAllPublishedPostsService.execute();
+  async execute(@Query() query): Promise<Post[]> {
+    const { skip, take } = query
+    let numberSkip = skip? parseInt(skip) : undefined
+    let numberTake = take? parseInt(take) : undefined
+    return this.findAllPublishedPostsService.execute({skip: numberSkip, take: numberTake});
   }
 }

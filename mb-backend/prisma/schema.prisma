@@ -11,11 +11,13 @@ generator client {
 }
 
 model User {
-  id    Int     @default(autoincrement()) @id
-  email String  @unique
-  name  String?
-  password  String
-  posts Post[]
+  id         Int      @default(autoincrement()) @id
+  email      String   @unique
+  name       String?
+  password   String
+  posts      Post[]
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @default(now()) @updatedAt
 }
 
 model Post {
@@ -25,4 +27,6 @@ model Post {
   published Boolean? @default(false)
   author    User?    @relation(fields: [authorId], references: [id])
   authorId  Int?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
 }

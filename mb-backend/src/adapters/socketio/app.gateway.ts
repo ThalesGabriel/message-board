@@ -19,9 +19,9 @@ export class AppGateway implements OnGatewayConnection{
 
   @SubscribeMessage('send-message')
   handleEvent(
-    @MessageBody() data: string,
+    @MessageBody() data: any,
     @ConnectedSocket() client: Socket,
-  ): string {
+  ): any {
     client.broadcast.emit('receive-message', data)
     return data;
   }
