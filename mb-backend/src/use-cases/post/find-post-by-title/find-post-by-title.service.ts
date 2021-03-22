@@ -6,7 +6,7 @@ import { PostService } from 'src/repo/post/post.service';
 export class FindPostByTitleService {
     constructor(private readonly postService: PostService) {}
 
-    execute(title: string): Promise<Post> {
-        return this.postService.find({ title: title });
-    }
+    // execute(title: string): Promise<Post> {
+    //     return this.postService.find({ title: title });
+    // }
 }

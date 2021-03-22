@@ -16,17 +16,42 @@ model User {
   name       String?
   password   String
   posts      Post[]
+  avatar     Media?    @relation("attachment", fields: [avatarId], references: [id])
+  avatarId   Int?
   createdAt  DateTime @default(now())
-  updatedAt  DateTime @default(now()) @updatedAt
+  updatedAt  DateTime @default(now())           @updatedAt
 }
 
 model Post {
-  id        Int      @default(autoincrement()) @id
-  title     String   @unique
-  content   String?
-  published Boolean? @default(false)
-  author    User?    @relation(fields: [authorId], references: [id])
-  authorId  Int?
-  createdAt DateTime @default(now())
-  updatedAt DateTime @default(now()) @updatedAt
+  id              Int      @default(autoincrement()) @id
+  title           String
+  content         String
+  published       Boolean? @default(false)
+  author          User?    @relation(fields: [authorId], references: [id])
+  authorId        Int?
+  attachments     Media[]
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @default(now())           @updatedAt
+}
+
+model Media {
+  id             Int      @default(autoincrement()) @id
+  attachementId  User?    @relation("attachment")
+  post           Post?    @relation(fields: [postId], references: [id])
+  postId         Int?
+  file           File     @relation("fileType", fields: [fileId], references: [id])
+  fileId         Int
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @default(now())          @updatedAt
+}
+
+model File {
+  id          Int      @default(autoincrement()) @id
+  filename    String
+  mimetype    String
+  encoding    String
+  path        String
+  media       Media?   @relation("fileType")
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @default(now())           @updatedAt
 }

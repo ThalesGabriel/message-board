@@ -6,8 +6,8 @@ import { FindPostByTitleService } from './find-post-by-title.service';
 export class FindPostByTitleController {
     constructor(private readonly findPostByTitleService: FindPostByTitleService) {}
 
-    @Get()
-    execute(@Param('title') title: string): Promise<Post> {
-        return this.findPostByTitleService.execute(title)
-    }
+    // @Get()
+    // execute(@Param('title') title: string): Promise<Post> {
+    //     return this.findPostByTitleService.execute(title)
+    // }
 }
