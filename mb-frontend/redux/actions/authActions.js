@@ -4,9 +4,14 @@ import {
   SIGNUP_FAIL,
   LOGIN_REQUESTED,
   LOGIN_SUCCESS,
-  LOGIN_FAIL
+  LOGIN_FAIL,
+  PROFILE_REQUESTED,
+  PROFILE_SUCCESS,
+  PROFILE_FAIL
 } from '../types';
 import axios from 'axios'
+import api from '../../utils/api';
+import { setCookie } from '../../utils/cookie';
 
 const registerUser = values => {
   return dispatch => {
@@ -53,10 +58,11 @@ const login = values => {
       username: values.username
     };
 
-    axios
-      .post('http://localhost:3001/login/auth', user)
+    api
+      .post('login/auth', user)
       .then(response => {
         console.log(response)
+        setCookie("AUTHORIZATION_TOKEN", response.data)
         dispatch({
           type: LOGIN_SUCCESS,
           token: response.data
@@ -75,7 +81,32 @@ const login = values => {
   };
 };
 
+const profile = () => {
+  return dispatch => {
+    dispatch({ type: PROFILE_REQUESTED });
+    console.log('PROFILE_REQUESTED')
+
+    api
+      .get('profile/auth')
+      .then(response => {
+        console.log(response)
+        
+      })
+      .catch(error => {
+        console.log('error');
+        console.log(error.response);
+        dispatch({
+          type: PROFILE_FAIL,
+          error: {
+            message: error.response.data.message
+          }
+        });
+      });
+  };
+};
+
 export default {
   registerUser,
-  login
+  login,
+  profile
 };

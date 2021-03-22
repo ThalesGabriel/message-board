@@ -20,6 +20,7 @@ import actions from "../redux/actions";
 import { compose } from 'recompose';
 import { connect } from 'react-redux';
 import CustomSnackbar from "../components/CustomSnackbar";
+import { getCookieFromBrowser } from '../utils/cookie';
 
 function Copyright() {
   return (
@@ -71,7 +72,7 @@ function SignIn(props) {
   const [ finished, setFinished ] = React.useState(false)
 
   React.useEffect(() => {
-    if(props.token) {
+    if(props.token || getCookieFromBrowser("AUTHORIZATION_TOKEN")) {
       setFinished(true)
       router.push("/home") 
     }
@@ -88,6 +89,8 @@ function SignIn(props) {
       props.login(values)
     },
   });
+
+  if(getCookieFromBrowser("AUTHORIZATION_TOKEN")) return null
 
   return (
     <Container component="main" maxWidth="xs">

@@ -21,6 +21,9 @@ import {
 } from "../components/MeuPerfil";
 import CircularProgress from "../components/CircularProgress";
 import { setISODay } from "date-fns";
+import actions from "../redux/actions";
+import { compose } from 'recompose';
+import { connect } from 'react-redux';
 
 const useStyles = makeStyles((theme) => ({
   customContainer: {
@@ -67,7 +70,7 @@ const useStyles = makeStyles((theme) => ({
 const languages = ["PORTUGUÊS", "INGLÊS"];
 const I18N_STORAGE_KEY = "i18nextLng";
 
-export default function Homepage() {
+function Profile(props) {
   const [data, setData] = React.useState({});
   const [id, setId] = React.useState("");
   const [open, setOpen] = React.useState(false);
@@ -104,6 +107,11 @@ export default function Homepage() {
     localStorage.setItem(I18N_STORAGE_KEY, event.target.value);
     window.location = window.location;
   };
+
+  useEffect(() => {
+    console.log(props)
+    props.profile()
+  },[ ])
 
   if (false) {
     return (
@@ -200,3 +208,14 @@ export default function Homepage() {
     </Page>
   );
 }
+
+const mapStateToProps = (state) => {
+  return {
+    user: state.authentication.user,
+    error: state.authentication.error,
+    loading: state.authentication.loading,
+  };
+}
+
+
+export default connect(mapStateToProps, actions)(Profile);

@@ -6,6 +6,10 @@ export const LOGIN_REQUESTED = 'LOGIN_REQUESTED';
 export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
 export const LOGIN_FAIL = 'LOGIN_FAIL';
 
+export const PROFILE_REQUESTED = 'PROFILE_REQUESTED';
+export const PROFILE_SUCCESS = 'PROFILE_SUCCESS';
+export const PROFILE_FAIL = 'PROFILE_FAIL';
+
 export const POST_REQUESTED = 'POST_REQUESTED';
 export const POST_SUCCESS = 'POST_SUCCESS';
 export const POST_FAIL = 'POST_FAIL';

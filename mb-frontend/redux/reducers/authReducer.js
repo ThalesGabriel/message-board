@@ -5,6 +5,9 @@ import {
   LOGIN_REQUESTED,
   LOGIN_SUCCESS,
   LOGIN_FAIL,
+  PROFILE_REQUESTED,
+  PROFILE_SUCCESS,
+  PROFILE_FAIL,
 } from "../types";
 
 const initialState = {
@@ -34,6 +37,16 @@ export default (state = initialState, action) => {
     case LOGIN_SUCCESS:
       return Object.assign({}, state, { loading: false, token: action.token });
     case LOGIN_FAIL:
+      return Object.assign({}, state, { loading: false, error: action.error });
+    case PROFILE_REQUESTED:
+      return Object.assign({}, state, { 
+        loading: true, 
+        token: null, 
+        error: null 
+      });
+    case PROFILE_SUCCESS:
+      return Object.assign({}, state, { loading: false, user: action.user });
+    case PROFILE_FAIL:
       return Object.assign({}, state, { loading: false, error: action.error });
     default:
       return state;

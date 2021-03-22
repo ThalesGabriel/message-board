@@ -3,49 +3,22 @@ import Cookie from 'js-cookie';
 import axios from 'axios';
 
 async function getAppToken() {
-  const currentToken = Cookie.get('APP_TOKEN');
-  if (!currentToken) {
-    const getToken = await axios.post(
-      `${process.env.BASE_URL}/oauth/token`,
-      {
-        client_id: process.env.CLIENT_ID,
-        client_secret: process.env.CLIENT_SECRET,
-        grant_type: process.env.GRANT_TYPE,
-      },
-      {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      },
-    );
-    const { access_token } = await getToken.data;
-    if (access_token) {
-      setCookie('APP_TOKEN', access_token, 364);
-      return access_token;
-    }
-  } else {
-    return currentToken;
-  }
+  let token = Cookie.get('AUTHORIZATION_TOKEN')
+  if(token) token = JSON.parse(token).access_token
+  return token;
 }
 
 const api = axios.create({
-  baseURL: `${process.env.BASE_URL}/api`,
-  headers: {
-    'Content-Type': 'application/json',
-    Accept: 'application/json',
-  },
+  baseURL: `${process.env.URL}`,
 });
 
 api.updateToken = () => {
-  removeCookie('APP_TOKEN');
+  removeCookie('AUTHORIZATION_TOKEN');
 };
 
 api.interceptors.request.use(
   async function (config) {
     const appToken = await getAppToken();
-    if (config.clientToken) {
-      config.headers['X-Client-Token'] = config.clientToken;
-    }
     if (appToken) {
       config.headers['Authorization'] = `Bearer ${appToken}`;
     }
@@ -64,9 +37,9 @@ api.interceptors.response.use(
   function (error) {
     if (error.response) {
       if (error.response.status === 401) {
-        Cookie.remove('APP_TOKEN');
-        getAppToken();
-        window.location.reload();
+        // Cookie.remove('AUTHORIZATION_TOKEN');
+        // getAppToken();
+        // window.location.reload();
       }
       if (error.response.status === 406) {
         const authError = error.response;
