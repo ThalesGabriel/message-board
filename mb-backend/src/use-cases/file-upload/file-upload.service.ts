@@ -34,25 +34,26 @@ export class FileUploadService {
         encoding,
         path,
       });
-      
-      console.log(user)
-      console.log(post)
 
       const newMedia = await this.mediaService.create({
-        attachementId: {
-          connect: { id: user.id},
-        },
-        post: {
-          connect: { id: post.id },
-        },
         file: {
           connect: { id: newFile.id },
         },
       });
 
-      if(user.id) {
+      if(1) {
+        await this.mediaService.update({
+          where: { id: newMedia.id },
+          data: {
+            attachementId: {
+              connect: {
+                id: 1,
+              },
+            },
+          },
+        })
         await this.userService.update({
-          where: { id: user.id },
+          where: { id: 1 },
           data: {
             avatar: {
               connect: {
@@ -61,9 +62,18 @@ export class FileUploadService {
             },
           },
         });
+      } else if (post.id) {
+        await this.mediaService.update({
+          where: { id: newMedia.id },
+          data: {
+            post: {
+              connect: { id: post.id },
+            },
+          },
+        })
       }
 
-      return true
+      return { filename }
     } catch (error) {
       console.log(error)
       return false

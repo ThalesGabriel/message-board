@@ -10,6 +10,6 @@ export class ProfileController {
     @UseGuards(JwtAuthGuard)
     @Get('/auth')
     getProfile(@Request() req) {
-        console.log(req)
+        return this.profileService.execute(req.user.userId)
     }
 }

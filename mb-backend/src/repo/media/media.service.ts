@@ -12,4 +12,15 @@ export class MediaService implements IMediaInterface {
       ): Promise<Media | null> {
         return this.prismaService.media.create({ data })
     }
+
+    async update(params: {
+      where: Prisma.MediaWhereUniqueInput;
+      data: Prisma.MediaUpdateInput;
+    }): Promise<Media> {
+      const { where, data } = params;
+      return this.prismaService.media.update({
+        data,
+        where,
+      });
+    }
 }

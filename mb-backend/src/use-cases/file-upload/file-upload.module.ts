@@ -10,7 +10,7 @@ import { FileUploadService } from './file-upload.service';
 @Module({
   imports: [
     MulterModule.register({
-      dest: '../tmp/uploads'
+      dest: '../mb-frontend/public/tmp/uploads'
     }),
   ],
   controllers: [FileUploadController],

@@ -9,7 +9,7 @@ export default function Page(props) {
     const router = useRouter()
 
     useEffect(() => {
-        console.log('token', JSON.parse(getCookieFromBrowser("AUTHORIZATION_TOKEN")))
+        // console.log('token', JSON.parse(getCookieFromBrowser("AUTHORIZATION_TOKEN")))
         if(!getCookieFromBrowser("AUTHORIZATION_TOKEN")) router.push('/')
     }, [])
 

@@ -12,6 +12,17 @@ export class UserService implements IUserInterface {
   ): Promise<User | null> {
     return this.prismaService.user.findUnique({
       where: userWhereUniqueInput,
+      include: {
+        avatar: {
+          select: {
+            file: {
+              select: {
+                filename: true
+              }
+            }
+          }
+        }
+      },
     });
   }
 

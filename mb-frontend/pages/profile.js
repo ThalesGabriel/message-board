@@ -110,8 +110,8 @@ function Profile(props) {
 
   useEffect(() => {
     console.log(props)
-    props.profile()
-  },[ ])
+    if(!props.user) props.profile()
+  },[ props ])
 
   if (false) {
     return (
@@ -130,7 +130,7 @@ function Profile(props) {
           <Typography variant="h6" component="h6" className="definition">
             Minhas informações
           </Typography>
-          <Summary />
+          <Summary user={props.user} uploadFile={props.uploadFile} filename={props.filename}/>
           <UserAction
             definition={"Alteração de senha"}
             icon_path="/assets/alterarpalavrapasse.svg"

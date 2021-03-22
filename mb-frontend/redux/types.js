@@ -17,3 +17,7 @@ export const POST_FAIL = 'POST_FAIL';
 export const POSTS_REQUESTED = 'POSTS_REQUESTED';
 export const POSTS_SUCCESS = 'POSTS_SUCCESS';
 export const POSTS_FAIL = 'POSTS_FAIL';
+
+export const UPLOAD_REQUESTED = 'UPLOAD_REQUESTED';
+export const UPLOAD_SUCCESS = 'UPLOAD_SUCCESS';
+export const UPLOAD_FAIL = 'UPLOAD_FAIL';

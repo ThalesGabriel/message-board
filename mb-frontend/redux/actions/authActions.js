@@ -90,7 +90,7 @@ const profile = () => {
       .get('profile/auth')
       .then(response => {
         console.log(response)
-        
+        dispatch({type: PROFILE_SUCCESS, user: response.data})
       })
       .catch(error => {
         console.log('error');

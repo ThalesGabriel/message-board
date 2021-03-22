@@ -11,10 +11,11 @@ export class FileUploadController {
     ) { }
 
     @Post('one')
-    @UseInterceptors(FileInterceptor('file'))
-    uploadFile(@UploadedFile() file: Express.Multer.File, @Body() postData: {user: UserDto, post: PostDto}) {
+    @UseInterceptors(FileInterceptor('image'))
+    uploadFile(@UploadedFile() image: Express.Multer.File, @Body() postData: {user: UserDto, post: PostDto}) {
        const { user, post } = postData
-       return this.fileUploadService.create(file, user, post)
+       console.log('image', image)
+       return this.fileUploadService.create(image, user, post)
     }
 
     @Post('many')

@@ -36,10 +36,11 @@ api.interceptors.response.use(
   },
   function (error) {
     if (error.response) {
+      console.log(error)
       if (error.response.status === 401) {
-        // Cookie.remove('AUTHORIZATION_TOKEN');
+        Cookie.remove('AUTHORIZATION_TOKEN');
         // getAppToken();
-        // window.location.reload();
+        window.location.href= "http://localhost:3000"
       }
       if (error.response.status === 406) {
         const authError = error.response;

@@ -8,6 +8,7 @@ import {
 } from "../types";
 import axios from "axios";
 import { v4 as uuidv4 } from 'uuid';
+import api from "../../utils/api";
 
 const createPost = values => {
 	return dispatch => {
@@ -48,8 +49,8 @@ const getPublishedPosts = values => {
     dispatch({ type: POSTS_REQUESTED });
     console.log('POSTS_REQUESTED', values)
 
-		axios
-      .get(`http://localhost:3001/find-all-published-posts?skip=1&take=10`)
+		api
+      .get(`/find-all-published-posts?skip=1&take=10`)
       .then(response => {
         console.log(response)
 				dispatch({ 
