@@ -10,6 +10,6 @@ export class ProfileController {
     @UseGuards(JwtAuthGuard)
     @Get('/auth')
     getProfile(@Request() req) {
-        return this.profileService.execute(req.user.userId)
+        return this.profileService.execute(req.refresh_token)
     }
 }

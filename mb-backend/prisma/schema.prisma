@@ -11,15 +11,16 @@ generator client {
 }
 
 model User {
-  id         Int      @default(autoincrement()) @id
-  email      String   @unique
-  name       String?
-  password   String
-  posts      Post[]
-  avatar     Media?    @relation("attachment", fields: [avatarId], references: [id])
-  avatarId   Int?
-  createdAt  DateTime @default(now())
-  updatedAt  DateTime @default(now())           @updatedAt
+  id             Int             @default(autoincrement()) @id
+  email          String          @unique
+  name           String?
+  password       String
+  posts          Post[]
+  avatar         Media?          @relation("attachment", fields: [avatarId], references: [id])
+  avatarId       Int?
+  refresh_token  RefreshToken?   @relation("token")
+  createdAt      DateTime        @default(now())
+  updatedAt      DateTime        @default(now())           @updatedAt
 }
 
 model Post {
@@ -54,4 +55,12 @@ model File {
   media       Media?   @relation("fileType")
   createdAt   DateTime @default(now())
   updatedAt   DateTime @default(now())           @updatedAt
+}
+
+model RefreshToken {
+  id          Int     @default(autoincrement()) @id
+  user        User    @relation("token", fields: [userId], references: [id])
+  userId      Int
+  is_revoked  Boolean
+  expires     DateTime?
 }
