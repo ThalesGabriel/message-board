@@ -15,6 +15,7 @@ import {
   
     handleRequest(err, user, info) {
       // You can throw an exception based on either "info" or "err" arguments
+      console.log('err', info)
       if (err || !user) {
         throw err || new UnauthorizedException();
       }

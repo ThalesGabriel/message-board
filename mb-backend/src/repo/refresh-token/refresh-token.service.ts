@@ -11,12 +11,15 @@ export class RefreshTokenService implements IRefreshTokenInterface {
     ) {}
 
     public async create(user: UserDto, ttl: number): Promise<RefreshToken> {
+        console.log('user', user)
         const expiration = new Date()
         expiration.setTime(expiration.getTime() + ttl)
         return await this.prismaService.refreshToken.create({
             data: {
                 user: {
-                    connect: { id: user.id }
+                    connect: { 
+                        email: user.email
+                    }
                 },
                 is_revoked: false,
                 expires: expiration

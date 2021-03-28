@@ -6,6 +6,7 @@ export class ProfileService {
     constructor(private readonly authService: AuthService) {}
 
     async execute(refresh_token: string) {
+        console.log('dey', refresh_token)
         return this.authService.refresh(refresh_token)
     }
 }

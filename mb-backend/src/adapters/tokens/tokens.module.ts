@@ -11,7 +11,7 @@ import { TokensService } from './tokens.service';
     UserModule,
     JwtModule.register({
       secret: jwtConstants.secret,
-      signOptions: { expiresIn: '60s' },
+      signOptions: { expiresIn: '180s' },
     })
   ],
   providers: [TokensService],

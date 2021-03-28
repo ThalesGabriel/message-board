@@ -36,7 +36,7 @@ export class AuthService implements IAuthInterface {
     const user = await this.userService.find({email});
     if (user) {
 			const p = await this.encryptService.isSamePassword(pass, user.password)
-			if(p) {
+      if(p) {
 				const { password, ...result } = user;
 				return result;
 			}
@@ -45,7 +45,7 @@ export class AuthService implements IAuthInterface {
     return null;
   }
 
-	async login(user: LoginDto) {
+	async login(user: any) {
     const token = await this.tokensService.generateAccessToken(user)
     const refresh = await this.tokensService.generateRefreshToken(user, 60 * 60)
 
@@ -58,6 +58,7 @@ export class AuthService implements IAuthInterface {
   }
 
   async register(registerData: RegisterDto) {
+    console.log(registerData)
     const userAlreadyExists = await this.userService.find({ email: registerData.email })
 
     if(userAlreadyExists) throw new HttpException('User email already exists.', HttpStatus.FORBIDDEN);
