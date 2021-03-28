@@ -12,6 +12,7 @@ import PropTypes from "prop-types";
 import { translate } from "../../translations";
 import Dropzone from "react-dropzone";
 import EditIcon from '@material-ui/icons/Edit';
+import { format } from "date-fns";
 
 const useStyles = makeStyles((theme) => ({
   CustomCard: {
@@ -90,13 +91,13 @@ export default function Summary(props) {
         <Grid container alignItems="center" justify="space-between">
           <Grid item>
             <Typography component="h3" variant="h3" className="title">
-              Nome
+              {user?.name}
             </Typography>
             <Typography component="h6" variant="h6">
-              algo
+              {user?.email.toLowerCase()}
             </Typography>
             <Typography component="h6" variant="h6" className="custom-h6">
-              eita
+              Recife
             </Typography>
           </Grid>
           <Grid item>
@@ -142,7 +143,7 @@ export default function Summary(props) {
         </Grid>
         <br />
           <Typography component="h6" variant="h6" className="custom-h6">
-            Membro desde
+            Membro desde {user ? format(new Date(user?.createdAt), "dd/MM/yyyy") : ""}
           </Typography> 
         
       </CardContent>

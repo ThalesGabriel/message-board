@@ -4,7 +4,12 @@ import axios from 'axios';
 
 async function getAppToken() {
   let token = Cookie.get('AUTHORIZATION_TOKEN')
-  if(token) token = JSON.parse(token).access_token
+  return token;
+}
+
+async function refreshToken() {
+  let token = Cookie.get('REFRESH_TOKEN')
+  console.log('refresh', token)
   return token;
 }
 
@@ -26,6 +31,7 @@ api.interceptors.request.use(
     return config;
   },
   function (error) {
+    console.log('appToken', error)
     return Promise.reject(error);
   },
 );
@@ -34,23 +40,27 @@ api.interceptors.response.use(
   function (response) {
     return response;
   },
-  function (error) {
+  async function (error) {
     if (error.response) {
-      console.log(error)
       if (error.response.status === 401) {
-        Cookie.remove('AUTHORIZATION_TOKEN');
-        // getAppToken();
-        window.location.href= "http://localhost:3000"
+        console.log('expirou')
+        const res = await api.post('profile/auth', {
+          refresh_token: await refreshToken()
+        })
+        const { data: { data } } = res
+        console.log(data)
+        const originalRequest = error.config;
+        setCookie('AUTHORIZATION_TOKEN', data.payload.token)
+        return axiosApiInstance(originalRequest);
       }
-      if (error.response.status === 406) {
-        const authError = error.response;
-        if (authError.config.url !== 'cliente') {
-          auth.signOut();
-        }
+      if (error.response.status === 422) {
+        removeCookie('AUTHORIZATION_TOKEN')
+        removeCookie('REFRESH_TOKEN')
+        window.location.href= "http://localhost:3000"
       }
     }
     return Promise.reject(error);
-  },
+  }
 );
 
 export default api;

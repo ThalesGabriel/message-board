@@ -24,6 +24,7 @@ import { ProfileModule } from './use-cases/auth/profile/profile.module';
     FileUploadModule,
     RegisterModule,
     LoginModule,
+    SocketioModule,
     ProfileModule
   ],
   controllers: [AppController],

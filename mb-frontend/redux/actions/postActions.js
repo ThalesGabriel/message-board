@@ -44,13 +44,14 @@ const createPost = values => {
 	};
 };
 
-const getPublishedPosts = values => {
+const getPublishedPosts = () => {
 	return dispatch => {
     dispatch({ type: POSTS_REQUESTED });
-    console.log('POSTS_REQUESTED', values)
+    console.log('POSTS_REQUESTED', )
 
 		api
-      .get(`/find-all-published-posts?skip=1&take=10`)
+      .get(`/find-all-published-posts`)
+      // .get(`/find-all-published-posts?skip=1&take=10`)
       .then(response => {
         console.log(response)
 				dispatch({ 
@@ -60,7 +61,7 @@ const getPublishedPosts = values => {
       })
       .catch(error => {
         console.log('error');
-        console.log(error.response);
+        console.log(error);
         dispatch({
           type: POSTS_FAIL,
           error: {
