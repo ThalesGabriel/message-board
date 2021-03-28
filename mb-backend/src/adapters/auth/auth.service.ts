@@ -7,7 +7,7 @@ import { JwtService } from '@nestjs/jwt';
 import UserDto from 'src/domain/dto/user.dto';
 import AuthenticationPayloadDTO from 'src/domain/dto/authenticationPayload.dto';
 import RegisterDto from 'src/domain/dto/register.dto';
-import { MailService } from '../mail/mail.service';
+// import { MailService } from '../mail/mail.service';
 import { TokensService } from '../tokens/tokens.service';
 
 @Injectable()
@@ -17,7 +17,7 @@ export class AuthService implements IAuthInterface {
     private readonly userService: UserService, 
     private readonly encryptService: EncryptService,
     private readonly jwtService: JwtService,
-    private readonly mailService: MailService,
+    // private readonly mailService: MailService,
     private readonly tokensService: TokensService
   ) {}
 
@@ -70,7 +70,7 @@ export class AuthService implements IAuthInterface {
     const refresh = await this.tokensService.generateRefreshToken(newUser, 60 * 60)
     const payload = this.buildResponsePayload(newUser, token, refresh)
 
-    await this.mailService.sendWelcomeMessage(registerData)
+    // await this.mailService.sendWelcomeMessage(registerData)
 
     return {
       status: 'success',
