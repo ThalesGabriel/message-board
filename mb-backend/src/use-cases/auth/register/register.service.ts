@@ -1,12 +1,12 @@
 import { Injectable } from '@nestjs/common';
 import { AuthService } from 'src/adapters/auth/auth.service';
+import RegisterDto from 'src/domain/dto/register.dto';
 
 @Injectable()
-export class ProfileService {
+export class RegisterService {
     constructor(private readonly authService: AuthService) {}
 
-    async execute(refresh_token: string) {
-        console.log('dey', refresh_token)
-        return this.authService.refresh(refresh_token)
+    async execute(data: RegisterDto) {
+        return this.authService.register(data);
     }
 }

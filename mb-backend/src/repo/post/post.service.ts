@@ -1,9 +1,10 @@
 import { Injectable } from '@nestjs/common';
 import { Post, Prisma } from '@prisma/client';
+import { IPostInterface } from 'src/interfaces/IPostInterface';
 import { PrismaService } from 'src/prisma/prisma.service';
 
 @Injectable()
-export class PostService {
+export class PostService implements IPostInterface {
   constructor(private readonly prismaService: PrismaService) {}
 
   async find(

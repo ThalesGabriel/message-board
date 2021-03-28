@@ -47,7 +47,7 @@ export default function UserAction(props) {
       <Typography variant="h6" component="h6" className="definition">
         {definition}
       </Typography>
-      <Card className="custom-card" style={{backgroundColor: '#28282a', borderRadius: 20}}>
+      <Card className="custom-card" style={{backgroundColor: 'white', borderRadius: 20}}>
         <CardActionArea onClick={onClick}>
           <img src={icon_path} />
           <Typography className="text" variant="h6" color="primary">

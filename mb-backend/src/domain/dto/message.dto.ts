@@ -3,7 +3,7 @@ class AddressDTO {
     name: string;
 }
 
-export class MessageDTO {
+class MessageDTO {
   sender: AddressDTO;
   recipient: AddressDTO;
   body: string;

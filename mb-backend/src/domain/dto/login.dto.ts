@@ -1,6 +1,6 @@
 import { IsEmail, IsString, IsNotEmpty, MinLength, IsNumber } from 'class-validator';
  
-export class LoginDto {
+class LoginDto {
   @IsNumber()
   id: number;
 

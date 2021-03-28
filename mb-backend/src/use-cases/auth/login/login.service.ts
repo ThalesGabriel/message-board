@@ -7,6 +7,7 @@ export class LoginService {
     constructor(private readonly authService: AuthService) {}
 
     async execute(user: LoginDto) {
+        console.log('agora')
         return this.authService.login(user);
     }
 }

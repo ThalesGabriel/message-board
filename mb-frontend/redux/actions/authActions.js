@@ -11,7 +11,7 @@ import {
 } from '../types';
 import axios from 'axios'
 import api from '../../utils/api';
-import { setCookie } from '../../utils/cookie';
+import { getCookieFromBrowser, setCookie } from '../../utils/cookie';
 
 const registerUser = values => {
   return dispatch => {
@@ -62,10 +62,12 @@ const login = values => {
       .post('login/auth', user)
       .then(response => {
         console.log(response)
-        setCookie("AUTHORIZATION_TOKEN", response.data)
+        const { data: { data } } = response
+        setCookie("AUTHORIZATION_TOKEN", data.payload.token)
+        setCookie("REFRESH_TOKEN", data.payload.refresh_token)
         dispatch({
           type: LOGIN_SUCCESS,
-          token: response.data
+          token: data.payload.token
         });
       })
       .catch(error => {
@@ -87,10 +89,17 @@ const profile = () => {
     console.log('PROFILE_REQUESTED')
 
     api
-      .get('profile/auth')
+      .post('profile/auth', {
+        refresh_token: getCookieFromBrowser('REFRESH_TOKEN')
+      })
       .then(response => {
         console.log(response)
-        dispatch({type: PROFILE_SUCCESS, user: response.data})
+        const { data: { data: { user, payload } } } = response
+        setCookie('AUTHORIZATION_TOKEN', payload.token)
+        dispatch({
+          type: PROFILE_SUCCESS, 
+          user
+        })
       })
       .catch(error => {
         console.log('error');

@@ -24,7 +24,7 @@ export class FileUploadService {
     data: Express.Multer.File,
     user: UserDto,
     post: PostDto,
-  ): Promise<any> {
+  ): Promise<Express.Multer.File> {
     try {
       const { filename, mimetype, encoding, path } = data;
 
@@ -73,10 +73,10 @@ export class FileUploadService {
         })
       }
 
-      return { filename }
+      return data
     } catch (error) {
       console.log(error)
-      return false
+      return null
     }
   }
 }
