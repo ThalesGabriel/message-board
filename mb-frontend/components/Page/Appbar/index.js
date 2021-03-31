@@ -15,6 +15,7 @@ import MailIcon from '@material-ui/icons/Mail';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import MoreIcon from '@material-ui/icons/MoreVert';
 import {useRouter} from "next/router";
+import { Button } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
   grow: {
@@ -175,9 +176,7 @@ export default function Appbar() {
           >
             <MenuIcon />
           </IconButton>
-          <Typography className={classes.title} color="secondary" variant="h6" noWrap>
-            Message board
-          </Typography>
+          <Button color="secondary" onClick={() => router.push('/')}>Message board</Button>
           <div className={classes.search}>
             <div className={classes.searchIcon}>
               <SearchIcon />

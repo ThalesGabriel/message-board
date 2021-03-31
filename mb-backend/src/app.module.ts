@@ -15,6 +15,8 @@ import { TokensModule } from './adapters/tokens/tokens.module';
 import { RegisterModule } from './use-cases/auth/register/register.module';
 import { LoginModule } from './use-cases/auth/login/login.module';
 import { ProfileModule } from './use-cases/auth/profile/profile.module';
+import { AddCommentModule } from './use-cases/post/add-comment/add-comment.module';
+import { CommentModule } from './repo/comment/comment.module';
 
 @Module({
   imports: [
@@ -25,7 +27,9 @@ import { ProfileModule } from './use-cases/auth/profile/profile.module';
     RegisterModule,
     LoginModule,
     SocketioModule,
-    ProfileModule
+    ProfileModule,
+    AddCommentModule,
+    CommentModule
   ],
   controllers: [AppController],
   providers: [AppService],

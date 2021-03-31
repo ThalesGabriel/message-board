@@ -24,8 +24,10 @@ import PhotoOutlinedIcon from "@material-ui/icons/PhotoOutlined";
 import actions from "../redux/actions";
 import { connect } from 'react-redux';
 import FaceIcon from '@material-ui/icons/Face';
+import OndemandVideoIcon from '@material-ui/icons/OndemandVideo';
 
 import { PostCard } from "../components/Home";
+import FileUpload from "../components/FileUpload";
 
 const useStyles = makeStyles((theme) => ({
   customTextInput: {
@@ -173,15 +175,16 @@ function Home(props) {
                     alignItems: "center",
                   }}
                 >
-                  {/* <IconButton color="secondary" component="span">
-                    <CloudUploadIcon />
-                  </IconButton> */}
-                  <IconButton color="secondary" component="span">
-                    <SentimentSatisfiedOutlinedIcon />
-                  </IconButton>
-                  <IconButton color="secondary" component="span">
+                  <FileUpload
+                    accept="video/*,.mp4,.mkv,.avi,.m4v"
+                  >
+                    <OndemandVideoIcon />
+                  </FileUpload>
+                  <FileUpload
+                    accept="image/*"
+                  >
                     <PhotoOutlinedIcon />
-                  </IconButton>
+                  </FileUpload>
                 </Box>
                 <Box
                   style={{

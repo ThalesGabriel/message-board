@@ -31,8 +31,18 @@ model Post {
   author          User?    @relation(fields: [authorId], references: [id])
   authorId        Int?     @map("author")
   attachments     Media[]
+  comments        Comments[]
   createdAt       DateTime @default(now())
   updatedAt       DateTime @default(now())           @updatedAt
+}
+
+model Comments {
+  id             Int      @default(autoincrement()) @id
+  post           Post?    @relation(fields: [postId], references: [id])
+  postId         Int?
+  description    String
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @default(now())          @updatedAt
 }
 
 model Media {

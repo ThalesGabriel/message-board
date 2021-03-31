@@ -1,0 +1,13 @@
+-- CreateTable
+CREATE TABLE "Comments" (
+    "id" SERIAL NOT NULL,
+    "postId" INTEGER,
+    "description" TEXT NOT NULL,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+
+    PRIMARY KEY ("id")
+);
+
+-- AddForeignKey
+ALTER TABLE "Comments" ADD FOREIGN KEY ("postId") REFERENCES "Post"("id") ON DELETE SET NULL ON UPDATE CASCADE;

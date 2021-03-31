@@ -89,27 +89,19 @@ export default function PostCard(props) {
             <FavoriteBorderRoundedIcon />
           </IconButton>
         </Box>
-      </Paper>
-
-			<Paper style={{borderRadius: 20, marginTop: 20}}>
-				<Accordion expanded={accordionState} style={{borderRadius: 20}}>
+        <Accordion expanded={accordionState} style={{border: 0, boxShadow: 0, backgroundColor: "white"}}>
           <AccordionSummary
             style={{ display: "none" }}
             aria-controls="panel1a-content"
             id="panel1a-header"
           ></AccordionSummary>
           <AccordionDetails style={{flexDirection: 'column'}}>
-            {/* <TextInput label="Comentar" fieldName="post" /> */}
-						<Box style={{textAlign: 'center'}}>
-							Comentários
-						</Box>
-						<Box style={{margin: '10px 0', width: '100%'}}/>
 						<Box sty>
 							<TextField label="Comentar" fullWidth/>
 						</Box>
           </AccordionDetails>
         </Accordion>
-			</Paper>
+      </Paper>
     </Grid>
   );
 }
